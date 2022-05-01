@@ -1,7 +1,7 @@
 from cgitb import text
 import tkinter as tk
 from tkinter import messagebox
-from tkinter.tix import INTEGER
+#from tkinter.tix import INTEGER
 from turtle import bgcolor, width
 from tkinter import *
 from tkinter import ttk
@@ -19,8 +19,7 @@ colorbg="#ABB2B9"
 
 flog = Frame(window,width=1200,height=675,bg=colorbg)
 flog.place(x=0, y=0)
-def ingreso(cadena):
-   print("holamundo")
+
 def create_circle(x, y, r, canvasName,cont): #center coordinates, radius
     x0 = x - r
     y0 = y - r
@@ -29,21 +28,70 @@ def create_circle(x, y, r, canvasName,cont): #center coordinates, radius
     conct="q"+str(cont)
     canvasName.create_text(x,y,text=conct)
     return canvasName.create_oval(x0, y0, x1, y1)
-def Create_Lines(x1,y1,x2,y2,r,canvasNameL):
+def Createklin(x,y,r,canvasName,text):
+   x0 = x - r
+   y0 = y - r
+   x1 = x + r
+   y1 = y + r
+   canvasName.create_text(x,y-r-9,text=text)
+   return canvasName.create_arc(x0, y0, x1, y1,extent=190)
+def Create_Lines(x1,y1,x2,y2,r,canvasNameL,txt):
    x0=x1+r
    x=x2-r
+   postxt=x0+((x-x0)/2)
+   posytxt=y1-7
+   canvasNameL.create_text(postxt,posytxt,text=txt)
+   canvasNameL.create_text(x-2,y1,text='>')
    return canvasNameL.create_line(x0,y1,x,y2)
+def ingreso(cadena):
+   lienzo.delete('all')
+   rad=30
+   cirCount=0
+   posoldx=40
+   posoldy=100
+   create_circle(posoldx,posoldy,rad,lienzo,cirCount)
+   subcad=""
 
+   for i in range ( len (cadena) ):
+     
+      if(ord(cadena[i])>64 and ord(cadena[i])<91) or (ord(cadena[i])>96 and ord(cadena[i])<123):
+         if(i<len(cadena)-1):
+            if(cadena[i+1]=='|'):
+               subcad=cadena[i]+","+cadena[i+2]
+               #i=i+2
+               Create_Lines(posoldx,posoldy,posoldx+160,posoldy,rad,lienzo,subcad)
+               posoldx=posoldx+160
+               posoldy=posoldy
+               create_circle(posoldx,posoldy,rad,lienzo,i-1)
+            elif(cadena[i+1]==')'):
+               if(cadena[i+2]=='*'):
+                  subcad=cadena[i]+","+cadena[i-2]
+                  Createklin(posoldx,posoldy-rad,20,lienzo,subcad)
+            elif(cadena[i+1]=='*'):
+               Createklin(posoldx,posoldy-rad,20,lienzo,cadena[i])
+               #i=i+1
+            else:
+               Create_Lines(posoldx,posoldy,posoldx+160,posoldy,rad,lienzo,cadena[i])
+               posoldx=posoldx+160
+               posoldy=posoldy
+               create_circle(posoldx,posoldy,rad,lienzo,i+1)
+             
+         
+         
+         
+        
+         
+         
 def Correcto():
    cadena=cad.get()
    for i in range ( len (cadena) ):
       if not ((ord(cadena[i])>64 and ord(cadena[i])<91) or (ord(cadena[i])>96 and ord(cadena[i])<123)):
-         
          if not (cadena[i]=='|' or cadena[i]=='*' or cadena[i]=='(' or cadena[i]==')' or cadena[i]==' '):
             messagebox.askretrycancel(message="Caracter(es) invalido", title="ERROR")
+            cad.set('')
    if(cad.get()!=""):
       ingreso(cad.get())
-            
+
 
 
 #labels
@@ -65,9 +113,5 @@ lienzo = Canvas(width=1200, height=575, bg='white')
 lienzo.place(x=0,y=100)
 #crear texto
 #crear circulo
-cirCount=0
-create_circle(40,40,30,lienzo,cirCount)
-cirCount=cirCount+1
-create_circle(200,40,30,lienzo,cirCount)
-Create_Lines(40,40,200,40,30,lienzo)
+
 window.mainloop()
