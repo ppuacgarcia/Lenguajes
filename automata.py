@@ -50,7 +50,8 @@ def ingreso(cadena):
    posoldx=40
    posoldy=100
    create_circle(posoldx,posoldy,rad,lienzo,cirCount)
-   subcad=""
+   subcad="" 
+   cadena=cadena+" "
 
    for i in range ( len (cadena) ):
      
@@ -65,7 +66,7 @@ def ingreso(cadena):
                create_circle(posoldx,posoldy,rad,lienzo,i-1)
             elif(cadena[i+1]==')'):
                if(cadena[i+2]=='*'):
-                  subcad=cadena[i]+","+cadena[i-2]
+                  subcad=cadena[i-2]+","+cadena[i]
                   Createklin(posoldx,posoldy-rad,20,lienzo,subcad)
             elif(cadena[i+1]=='*'):
                Createklin(posoldx,posoldy-rad,20,lienzo,cadena[i])
