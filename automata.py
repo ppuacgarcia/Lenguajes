@@ -16,10 +16,8 @@ fonttxt = 'Arial'
 posx=20
 posy=30
 colorbg="#ABB2B9"
-
 flog = Frame(window,width=1200,height=675,bg=colorbg)
 flog.place(x=0, y=0)
-
 def create_circle(x, y, r, canvasName,cont): #center coordinates, radius
     x0 = x - r
     y0 = y - r
@@ -52,14 +50,11 @@ def ingreso(cadena):
    create_circle(posoldx,posoldy,rad,lienzo,cirCount)
    subcad="" 
    cadena=cadena+" "
-
    for i in range ( len (cadena) ):
-     
       if(ord(cadena[i])>64 and ord(cadena[i])<91) or (ord(cadena[i])>96 and ord(cadena[i])<123):
          if(i<len(cadena)-1):
             if(cadena[i+1]=='|'):
                subcad=cadena[i]+","+cadena[i+2]
-               #i=i+2
                Create_Lines(posoldx,posoldy,posoldx+160,posoldy,rad,lienzo,subcad)
                posoldx=posoldx+160
                posoldy=posoldy
@@ -76,13 +71,6 @@ def ingreso(cadena):
                posoldx=posoldx+160
                posoldy=posoldy
                create_circle(posoldx,posoldy,rad,lienzo,i+1)
-             
-         
-         
-         
-        
-         
-         
 def Correcto():
    cadena=cad.get()
    for i in range ( len (cadena) ):
@@ -92,15 +80,11 @@ def Correcto():
             cad.set('')
    if(cad.get()!=""):
       ingreso(cad.get())
-
-
-
 #labels
 #user label
 Label1=Label(flog,text='Ingrese una cadena de texto')
 Label1.place(x=posx-3,y=0)
 Label1.config(bg=colorbg,font=(fonttxt,15))
-
 #cad enrty
 cad=tk.StringVar()
 cad_entry = ttk.Entry(flog,textvariable=cad)
@@ -113,6 +97,4 @@ Enter.place(x=750,y=posy)
 lienzo = Canvas(width=1200, height=575, bg='white') 
 lienzo.place(x=0,y=100)
 #crear texto
-#crear circulo
-
 window.mainloop()
